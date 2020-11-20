@@ -20,9 +20,9 @@ public interface ContaService {
 	BaseResponse atualizar(Long id, ContaRequest contaRequest);
 	
 	// DELETE - DELETAR POR ID
-	BaseResponse deletar(Long id);
+//	BaseResponse deletar(Long id);
 	
 	// GET - EXIBE SALDO DE UMA CONTA HASH
-	ContaResponse Saldo(String hash);
+	ContaResponse saldo(String hash);
 
 }

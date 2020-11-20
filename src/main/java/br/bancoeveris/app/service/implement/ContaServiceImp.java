@@ -24,7 +24,7 @@ public class ContaServiceImp implements ContaService{
 	@Autowired
 	private OperacaoServiceImp _operacaoService;
 
-	// POST - CRIAR e CRIAR HASH AUTOMATICAMENTE
+	// POST - CRIAR CONTA e CRIAR HASH AUTOMATICAMENTE
 	public BaseResponse inserir(ContaRequest contaRequest) {
 		Conta conta = new Conta();
 		ContaResponse contaResponse = new ContaResponse();
@@ -51,7 +51,7 @@ public class ContaServiceImp implements ContaService{
 		return contaResponse;
 	}
 
-	// GET - OBTER POR UM POR ID
+	// GET - OBTER CONTA POR UM POR ID
 	public ContaResponse obter(Long id) {
 		Optional<Conta> conta = _repository.findById(id);
 
@@ -71,7 +71,7 @@ public class ContaServiceImp implements ContaService{
 		return response;
 	}
 
-	// GET - OBTER TUDO
+	// GET - OBTER TODAS AS CONTAS
 	public ListContaResponse listar() {
 
 		List<Conta> lista = _repository.findAll();
@@ -111,25 +111,8 @@ public class ContaServiceImp implements ContaService{
 
 	}
 
-	// DELETE - DELETAR POR ID
-	public BaseResponse deletar(Long id) {
-		BaseResponse response = new BaseResponse();
-
-		if (id == null) {
-			response.statusCode = 400;
-			response.message = "Id de conta não existe";
-			return response;
-		}
-
-		_repository.deleteById(id);
-
-		response.statusCode = 200;
-		response.message = "Conta Excluida com sucesso!";
-		return response;
-	}
-
 	// GET - EXIBE SALDO DE UMA CONTA HASH
-	public ContaResponse Saldo(String hash) {
+	public ContaResponse saldo(String hash) {
 
 		ContaResponse response = new ContaResponse();
 		response.statusCode = 400;
@@ -140,7 +123,7 @@ public class ContaServiceImp implements ContaService{
 			response.message = "Conta não encontrada!!";
 			return response;
 		}
-		double saldo = _operacaoService.Saldo(conta.getId());
+		double saldo = _operacaoService.saldo(conta.getId());
 		response.setSaldo(saldo);
 		response.setNome(conta.getNome());
 		response.setHash(conta.getHash());
@@ -150,4 +133,21 @@ public class ContaServiceImp implements ContaService{
 		response.statusCode = 200;
 		return response;
 	}
+	
+	// DELETE - DELETAR POR ID
+//	public BaseResponse deletar(Long id) {
+//		BaseResponse response = new BaseResponse();
+//
+//		if (id == null) {
+//			response.statusCode = 400;
+//			response.message = "Id de conta não existe";
+//			return response;
+//		}
+//
+//		_repository.deleteById(id);
+//
+//		response.statusCode = 200;
+//		response.message = "Conta Excluida com sucesso!";
+//		return response;
+//	}
 }

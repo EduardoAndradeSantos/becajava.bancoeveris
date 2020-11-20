@@ -24,7 +24,7 @@ public class OperacaoServiceImp implements OperacaoService {
 	private ContaRepository _contaRepository;
 
 	// CALCULA O SALDO AO DAR GET CONTA
-	public double Saldo(Long contaId) {
+	public double saldo(Long contaId) {
 
 		double saldo = 0;
 
@@ -74,7 +74,7 @@ public class OperacaoServiceImp implements OperacaoService {
 			return base;
 		}
 
-		if (operacao.getValor() <= 0.0) {
+		if (operacaoRequest.getValor() <= 0) {
 			base.statusCode = 400;
 			base.message = "Valor Inválido";
 			return base;
@@ -100,6 +100,12 @@ public class OperacaoServiceImp implements OperacaoService {
 		if (conta == null) {
 			base.statusCode = 404;
 			base.message = "Conta não encontrada";
+			return base;
+		}
+		
+		if (operacaoRequest.getValor() <= 0) {
+			base.statusCode = 400;
+			base.message = "Valor não pode ser zero";
 			return base;
 		}
 
@@ -132,6 +138,13 @@ public class OperacaoServiceImp implements OperacaoService {
 			base.message = "Conta destino não encontrada";
 			return base;
 		}
+		
+		if (transferenciaRequest.getValor() <= 0) {
+			base.statusCode = 400;
+			base.message = "Valor não pode ser zero";
+			return base;
+		}
+		
 
 		operacao.setTipo("T");
 		operacao.setContaOrigem(origem);

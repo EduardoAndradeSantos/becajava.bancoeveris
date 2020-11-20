@@ -17,7 +17,7 @@ import br.bancoeveris.app.service.implement.ContaServiceImp;
 public class ContaTest {
 
 	@Autowired
-	ContaService service;
+	ContaService contaService;
 
 	@Test
 	public void criarConta() {
@@ -25,7 +25,7 @@ public class ContaTest {
 
 		request.setNome("Igor");
 
-		BaseResponse response = service.inserir(request);
+		BaseResponse response = contaService.inserir(request);
 		Assertions.assertEquals(201, response.getStatusCode());
 		Assertions.assertEquals("Hash Gerado automaticamente na Conta criada!!", response.getMessage());
 	}
@@ -36,7 +36,7 @@ public class ContaTest {
 
 		request.setNome(null);
 
-		BaseResponse response = service.inserir(request);
+		BaseResponse response = contaService.inserir(request);
 		Assertions.assertEquals(400, response.getStatusCode());
 		Assertions.assertEquals("O Nome do cliente não foi preenchido.", response.getMessage());
 	}
@@ -47,35 +47,34 @@ public class ContaTest {
 
 		request.setNome("");
 
-		BaseResponse response = service.inserir(request);
+		BaseResponse response = contaService.inserir(request);
 		Assertions.assertEquals(400, response.getStatusCode());
 		Assertions.assertEquals("O Nome do cliente não foi preenchido.", response.getMessage());
 	}
 
 	@Test
-	public void saldo() {
+	public void saldoHash() {
 
-		String hash = "A1";
+		String hash = "53ec42ec-d5d2-40a8-8cd1-005299e0d513";
 
-		ContaResponse response = service.Saldo(hash);
+		ContaResponse response = contaService.saldo(hash);
 		Assertions.assertEquals(200, response.getStatusCode());
 		Assertions.assertEquals("Saldo Calculado", response.getMessage());
 	}
 
 	@Test
-	public void saldoNull() {
+	public void saldoHashNull() {
 
-		String hash = "123456";
+		String hash = "00000";
 
-		ContaResponse response = service.Saldo(hash);
+		ContaResponse response = contaService.saldo(hash);
 		Assertions.assertEquals(400, response.getStatusCode());
-		Assertions.assertEquals("Conta não encontrada!!", response.getMessage());
 	}
 
 	@Test
 	public void obterPorId() {
 
-		ContaResponse response = service.obter(1L);
+		ContaResponse response = contaService.obter(1L);
 		Assertions.assertEquals(200, response.getStatusCode());
 		Assertions.assertEquals("Conta obtida com sucesso.", response.getMessage());
 
@@ -84,7 +83,7 @@ public class ContaTest {
 	@Test
 	public void obterPorId0() {
 
-		ContaResponse response = service.obter(0L);
+		ContaResponse response = contaService.obter(0L);
 		Assertions.assertEquals(400, response.getStatusCode());
 		Assertions.assertEquals("Id não encontrado.", response.getMessage());
 
@@ -93,7 +92,7 @@ public class ContaTest {
 	@Test
 	public void obterPorIdNegativo() {
 
-		ContaResponse response = service.obter(-1L);
+		ContaResponse response = contaService.obter(-1L);
 		Assertions.assertEquals(400, response.getStatusCode());
 		Assertions.assertEquals("Id não encontrado.", response.getMessage());
 
@@ -102,7 +101,7 @@ public class ContaTest {
 	@Test
 	public void listar() {
 		
-		ListContaResponse response = service.listar();
+		ListContaResponse response = contaService.listar();
 		Assertions.assertEquals(200, response.getStatusCode());
 		Assertions.assertEquals("Clientes obtidos com sucesso.", response.getMessage());
 		assertThat(!response.getContas().isEmpty());
@@ -115,7 +114,7 @@ public class ContaTest {
 		ContaRequest request = new ContaRequest();
 		request.setNome("Danilo");
 		
-		BaseResponse response = service.atualizar(4L, request);
+		BaseResponse response = contaService.atualizar(4L, request);
 		Assertions.assertEquals(200, response.getStatusCode());
 		Assertions.assertEquals("Conta Atualizada com sucesso.", response.getMessage());
 	}
@@ -127,7 +126,7 @@ public class ContaTest {
 		ContaRequest request = new ContaRequest();
 		request.setNome("");
 		
-		BaseResponse response = service.atualizar(1L, request);
+		BaseResponse response = contaService.atualizar(1L, request);
 		Assertions.assertEquals(400, response.getStatusCode());
 		Assertions.assertEquals("Novo nome do cliente não foi preenchido.", response.getMessage());
 	}
@@ -138,11 +137,18 @@ public class ContaTest {
 		ContaRequest request = new ContaRequest();
 		request.setNome(null);
 		
-		BaseResponse response = service.atualizar(1L, request);
+		BaseResponse response = contaService.atualizar(1L, request);
 		Assertions.assertEquals(400, response.getStatusCode());
 		Assertions.assertEquals("Novo nome do cliente não foi preenchido.", response.getMessage());
 	}
 	
+	
+//	@Test
+//	public void calculaSaldo() {
+//			
+//		BaseResponse response = contaService.saldo("53ec42ec-d5d2-40a8-8cd1-005299e0d513");
+//		Assertions.assertEquals(200, response.getStatusCode());
+//	}
 	
 	
 }

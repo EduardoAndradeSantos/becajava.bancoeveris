@@ -66,21 +66,21 @@ public class ContaController extends BaseController {
 	}
 
 	// DELETE - DELETAR
-	@DeleteMapping(path = "/{id}")
-	public ResponseEntity<BaseResponse> deletar(@PathVariable Long id) {
-		try {
-			BaseResponse response = _service.deletar(id);
-			return ResponseEntity.status(response.statusCode).body(response);
-		} catch (Exception e) {
-			return ResponseEntity.status(errorBase.statusCode).body(errorBase);
-		}
-	}
+//	@DeleteMapping(path = "/{id}")
+//	public ResponseEntity<BaseResponse> deletar(@PathVariable Long id) {
+//		try {
+//			BaseResponse response = _service.deletar(id);
+//			return ResponseEntity.status(response.statusCode).body(response);
+//		} catch (Exception e) {
+//			return ResponseEntity.status(errorBase.statusCode).body(errorBase);
+//		}
+//	}
 
 	// GET - PEGAR SALDO
 	@GetMapping(path = "/saldo/{hash}")
-	public ResponseEntity<BaseResponse> Saldo(@PathVariable String hash) {
+	public ResponseEntity<BaseResponse> saldo(@PathVariable String hash) {
 		try {
-			BaseResponse response = _service.Saldo(hash);
+			BaseResponse response = _service.saldo(hash);
 			return ResponseEntity.status(response.statusCode).body(response);
 		} catch (Exception e) {
 			return ResponseEntity.status(errorBase.statusCode).body(errorBase);
